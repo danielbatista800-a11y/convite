@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convite Especial</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 20px; background: #f0f2f5; }
+    .card { background: white; padding: 30px; border-radius: 15px; max-width: 400px; margin: 0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    button { background: #25d366; color: white; border: none; padding: 12px 20px; border-radius: 25px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Meu Aniversário 🎉</h1>
+    <p>Falta pouco para comemorarmos juntos!</p>
+    
+    <!-- Contagem Regressiva -->
+    <div id="timer" style="font-size: 1.2rem; font-weight: bold; margin: 20px 0;"></div>
+
+    <!-- Botão Interativo RSVP -->
+    <button onclick="confirmarPresenca()">Confirmar Presença no WhatsApp</button>
+  </div>
+
+  <script>
+    // 1. Lógica da Contagem Regressiva
+    const dataEvento = new Date("2026-12-31T20:00:00").getTime();
+    
+    const x = setInterval(function() {
+      const agora = new Date().getTime();
+      const distancia = dataEvento - agora;
+      
+      const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      
+      document.getElementById("timer").innerHTML = `${dias}d ${horas}h restantes`;
+      
+      if (distancia < 0) {
+        clearInterval(x);
+        document.getElementById("timer").innerHTML = "É HOJE!";
+      }
+    }, 1000);
+
+    // 2. Lógica de Envio para WhatsApp
+    function confirmarPresenca() {
+      const telefone = "5511999999999"; // Seu número com DDD
+      const mensagem = encodeURIComponent("Olá! Confirmo minha presença no evento!");
+      window.open(`https://wa.me/${telefone}?text=${mensagem}`, '_blank');
+    }
+  </script>
+</body>
+</html>
