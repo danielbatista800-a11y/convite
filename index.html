@@ -3,50 +3,541 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Convite Especial</title>
+  <title>VOCÊ É NOSSO CONVIDADO</title>
+  
+  <!-- Fontes Google e Ícones FontAwesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Lib de Confetes -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <style>
-    body { font-family: sans-serif; text-align: center; padding: 20px; background: #f0f2f5; }
-    .card { background: white; padding: 30px; border-radius: 15px; max-width: 400px; margin: 0 auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-    button { background: #25d366; color: white; border: none; padding: 12px 20px; border-radius: 25px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+    :root {
+      --primary: #ff477e;
+      --primary-hover: #ff0055;
+      --secondary: #ff0a54;
+      --accent: #ff99c8;
+      --bg: #f8f9fa;
+      --card-bg: #ffffff;
+      --text: #2b2d42;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* Tela Inicial: Envelope Interativo */
+    #envelope-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      transition: opacity 0.6s ease, visibility 0.6s;
+    }
+
+    .envelope {
+      width: 280px;
+      height: 180px;
+      background: #ff758f;
+      border-radius: 10px;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: transform 0.3s ease;
+    }
+
+    .envelope:hover {
+      transform: scale(1.05);
+    }
+
+    .envelope-stamp {
+      background: white;
+      color: var(--primary);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .envelope-text {
+      color: white;
+      margin-top: 20px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      text-align: center;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.8; transform: scale(0.98); }
+    }
+
+    /* Card Principal do Convite */
+    .invite-card {
+      background: var(--card-bg);
+      border-radius: 25px;
+      max-width: 480px;
+      width: 100%;
+      padding: 35px 25px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .badge-slogan {
+      background: #ffe5ec;
+      color: var(--secondary);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2.2rem;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    /* Timer */
+    .countdown-box {
+      background: #f8f9fa;
+      border-radius: 15px;
+      padding: 15px;
+      margin: 20px 0;
+      border: 1px solid #e9ecef;
+    }
+
+    .countdown-title {
+      font-size: 0.8rem;
+      color: #6c757d;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .timer {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .timer-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .timer-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .timer-label {
+      font-size: 0.75rem;
+      color: #6c757d;
+    }
+
+    /* Seções de Informações */
+    .info-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin: 25px 0;
+      text-align: left;
+    }
+
+    .info-card {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 15px;
+    }
+
+    .info-icon {
+      background: var(--primary);
+      color: white;
+      width: 45px;
+      height: 45px;
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .info-text h4 {
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .info-text p {
+      font-size: 0.85rem;
+      color: #6c757d;
+    }
+
+    /* Atrações (Destaques) */
+    .attractions-section {
+      margin: 25px 0;
+    }
+
+    .section-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.3rem;
+      color: var(--text);
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .attractions-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .attraction-item {
+      background: #fff0f3;
+      padding: 12px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--secondary);
+    }
+
+    .attraction-item i {
+      font-size: 1.1rem;
+    }
+
+    /* Formulário RSVP */
+    .rsvp-box {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 18px;
+      margin-top: 25px;
+      border: 2px dashed var(--accent);
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    .form-group label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ced4da;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border 0.3s;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+    }
+
+    /* Botões */
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 4px 15px rgba(255, 71, 126, 0.4);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      margin-top: 10px;
+    }
+
+    .btn-outline:hover {
+      background: #fff0f3;
+    }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h1>Meu Aniversário 🎉</h1>
-    <p>Falta pouco para comemorarmos juntos!</p>
-    
-    <!-- Contagem Regressiva -->
-    <div id="timer" style="font-size: 1.2rem; font-weight: bold; margin: 20px 0;"></div>
+  <!-- TELA INTERATIVA INICIAL: ENVELOPE -->
+  <div id="envelope-screen" onclick="abrirConvite()">
+    <div class="envelope">
+      <div class="envelope-stamp">
+        <i class="fa-solid fa-envelope-open-text"></i>
+      </div>
+    </div>
+    <div class="envelope-text">Clique para abrir seu convite! ✨</div>
+  </div>
 
-    <!-- Botão Interativo RSVP -->
-    <button onclick="confirmarPresenca()">Confirmar Presença no WhatsApp</button>
+  <!-- CONVITE PRINCIPAL -->
+  <div class="invite-card">
+    
+    <!-- Slogan / Destaque Topo -->
+    <span class="badge-slogan" id="display-slogan">Sorteios & Brincadeiras</span>
+
+    <!-- Título do Evento -->
+    <h1 class="title" id="display-titulo">Aniversário do Daniel</h1>
+
+    <!-- Contagem Regressiva -->
+    <div class="countdown-box">
+      <div class="countdown-title">Falta pouco para a festa!</div>
+      <div class="timer">
+        <div class="timer-item"><span class="timer-number" id="dias">00</span><span class="timer-label">Dias</span></div>
+        <div class="timer-item"><span class="timer-number" id="horas">00</span><span class="timer-label">Horas</span></div>
+        <div class="timer-item"><span class="timer-number" id="minutos">00</span><span class="timer-label">Min</span></div>
+        <div class="timer-item"><span class="timer-number" id="segundos">00</span><span class="timer-label">Seg</span></div>
+      </div>
+    </div>
+
+    <!-- Informações do Evento -->
+    <div class="info-group">
+      <!-- Data e Horário -->
+      <div class="info-card">
+        <div class="info-icon"><i class="fa-solid fa-calendar-day"></i></div>
+        <div class="info-text">
+          <h4 id="display-data">Sábado, 15 de Outubro</h4>
+          <p id="display-horario">Horário: A partir das 19:00h</p>
+        </div>
+      </div>
+
+      <!-- Localização -->
+      <div class="info-card">
+        <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div class="info-text">
+          <h4 id="display-local-nome">Espaço de Festas Celebração</h4>
+          <p id="display-local-endereco">Rua das Flores, 123 - Centro</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botão do Mapa -->
+    <a href="#" id="link-mapa" target="_blank" class="btn btn-outline">
+      <i class="fa-solid fa-map-location-dot"></i> Ver Local no Google Maps
+    </a>
+
+    <!-- Atrações & Destaques -->
+    <div class="attractions-section">
+      <h3 class="section-title">O que vai ter na festa? 🎈</h3>
+      <div class="attractions-grid" id="container-atracoes">
+        <!-- Renderizado dinamicamente pelo JS -->
+      </div>
+    </div>
+
+    <!-- Formulário RSVP (Confirmação) -->
+    <div class="rsvp-box">
+      <h3 class="section-title" style="margin-bottom: 10px;">Confirmar Presença</h3>
+      
+      <div class="form-group">
+        <label for="nome">Seu Nome Completo:</label>
+        <input type="text" id="nome" class="form-control" placeholder="Digite seu nome">
+      </div>
+
+      <div class="form-group">
+        <label for="acompanhantes">Quantidade de Acompanhantes:</label>
+        <select id="acompanhantes" class="form-control">
+          <option value="Vou sozinho(a)">Vou sozinho(a)</option>
+          <option value="+1 acompanhante">+1 acompanhante</option>
+          <option value="+2 acompanhantes">+2 acompanhantes</option>
+          <option value="+3 ou mais acompanhantes">+3 ou mais acompanhantes</option>
+        </select>
+      </div>
+
+      <button class="btn btn-primary" onclick="confirmarWhatsApp()">
+        <i class="fa-brands fa-whatsapp"></i> Confirmar no WhatsApp
+      </button>
+    </div>
+
   </div>
 
   <script>
-    // 1. Lógica da Contagem Regressiva
-    const dataEvento = new Date("2026-12-31T20:00:00").getTime();
-    
-    const x = setInterval(function() {
+    /* ===============================================================
+       CONFIGURAÇÕES DO CONVITE (ALTERE SEUS DADOS AQUI)
+    =============================================================== */
+    const CONFIG = {
+      titulo: "Aniversário do Daniel 3.0",
+      slogan: "🎉 Sorteios, Brincadeiras & Diversão!",
+      
+      // Data no formato AAAA-MM-DDTHH:mm:ss
+      dataISO: "2026-10-15T19:00:00", 
+      
+      // Textos exibidos no cartão
+      dataTexto: "Sábado, 15 de Outubro de 2026",
+      horarioTexto: "Horário: A partir das 19:00h",
+      localNome: "Espaço de Festas Celebração",
+      localEndereco: "Rua das Flores, nº 123 - São Paulo/SP",
+      
+      // Link do Google Maps do local
+      linkGoogleMaps: "https://maps.google.com/?q=Rua+das+Flores+123+Sao+Paulo",
+      
+      // Seu número do WhatsApp com DDD (somente números)
+      telefoneWhatsApp: "5511999999999",
+
+      // Lista de Atrações/Slogans
+      atracoes: [
+        { icone: "fa-gift", texto: "Sorteios Especiais" },
+        { icone: "fa-gamepad", texto: "Brincadeiras" },
+        { icone: "fa-music", texto: "DJ & Música Ao Vivo" },
+        { icone: "fa-utensils", texto: "Comida & Drinks" }
+      ]
+    };
+
+    /* ===============================================================
+       LÓGICA E INTERATIVIDADE DO CONVITE
+    =============================================================== */
+
+    // 1. Preencher Informações na Tela
+    document.getElementById("display-titulo").innerText = CONFIG.titulo;
+    document.getElementById("display-slogan").innerText = CONFIG.slogan;
+    document.getElementById("display-data").innerText = CONFIG.dataTexto;
+    document.getElementById("display-horario").innerText = CONFIG.horarioTexto;
+    document.getElementById("display-local-nome").innerText = CONFIG.localNome;
+    document.getElementById("display-local-endereco").innerText = CONFIG.localEndereco;
+    document.getElementById("link-mapa").href = CONFIG.linkGoogleMaps;
+
+    // Renderizar Atrações
+    const atracoesContainer = document.getElementById("container-atracoes");
+    CONFIG.atracoes.forEach(item => {
+      atracoesContainer.innerHTML += `
+        <div class="attraction-item">
+          <i class="fa-solid ${item.icone}"></i>
+          <span>${item.texto}</span>
+        </div>
+      `;
+    });
+
+    // 2. Animação de Abertura do Envelope
+    function abrirConvite() {
+      const envelopeScreen = document.getElementById("envelope-screen");
+      envelopeScreen.style.opacity = "0";
+      envelopeScreen.style.visibility = "hidden";
+      
+      // Efeito de confete ao abrir
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+
+    // 3. Contagem Regressiva
+    const dataAlvo = new Date(CONFIG.dataISO).getTime();
+
+    const timerInterval = setInterval(() => {
       const agora = new Date().getTime();
-      const distancia = dataEvento - agora;
-      
-      const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
-      const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      
-      document.getElementById("timer").innerHTML = `${dias}d ${horas}h restantes`;
-      
-      if (distancia < 0) {
-        clearInterval(x);
-        document.getElementById("timer").innerHTML = "É HOJE!";
+      const diferenca = dataAlvo - agora;
+
+      if (diferenca > 0) {
+        const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
+
+        document.getElementById("dias").innerText = dias < 10 ? '0' + dias : dias;
+        document.getElementById("horas").innerText = horas < 10 ? '0' + horas : horas;
+        document.getElementById("minutos").innerText = minutos < 10 ? '0' + minutos : minutos;
+        document.getElementById("segundos").innerText = segundos < 10 ? '0' + segundos : segundos;
+      } else {
+        clearInterval(timerInterval);
+        document.querySelector(".countdown-box").innerHTML = "<h3 style='color:var(--primary); padding:10px;'>É HOJE! O evento começou! 🎉</h3>";
       }
     }, 1000);
 
-    // 2. Lógica de Envio para WhatsApp
-    function confirmarPresenca() {
-      const telefone = "5511999999999"; // Seu número com DDD
-      const mensagem = encodeURIComponent("Olá! Confirmo minha presença no evento!");
-      window.open(`https://wa.me/${telefone}?text=${mensagem}`, '_blank');
+    // 4. Confirmação de Presença via WhatsApp + Confetes
+    function confirmarWhatsApp() {
+      const nome = document.getElementById("nome").value.trim();
+      const acompanhantes = document.getElementById("acompanhantes").value;
+
+      if (!nome) {
+        alert("Por favor, preencha o seu nome antes de confirmar!");
+        return;
+      }
+
+      // Solta chuva de confetes festivos
+      confetti({
+        particleCount: 150,
+        spread: 100,
+        origin: { y: 0.5 }
+      });
+
+      // Monta a mensagem formatada para o WhatsApp
+      const textoMensagem = `Olá! Confirmo minha presença no *${CONFIG.titulo}*!\n\n👤 *Nome:* ${nome}\n👥 *Acompanhantes:* ${acompanhantes}`;
+      const urlWhatsApp = `https://wa.me/${CONFIG.telefoneWhatsApp}?text=${encodeURIComponent(textoMensagem)}`;
+
+      // Redireciona para o WhatsApp após um breve delay
+      setTimeout(() => {
+        window.open(urlWhatsApp, "_blank");
+      }, 1200);
     }
   </script>
 </body>
