@@ -312,6 +312,40 @@
       display: block;
     }
 
+    /* Estilos da Seção de Atrações */
+    .atracoes-box {
+      background: #ffffff;
+      border: 2px dashed #ffb703;
+      border-radius: 16px;
+      padding: 12px;
+      margin: 15px 0;
+      text-align: center;
+    }
+
+    .atracoes-box h4 {
+      font-family: 'Fredoka', sans-serif;
+      color: #023e8a;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .tags-container {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tag-item {
+      background: #0077b6;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      border-radius: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+
     /* Formulário RSVP */
     .rsvp-section {
       background: #ffffff;
@@ -446,6 +480,16 @@
             <label>Local</label>
             <p>Fundação Criança</p>
           </div>
+        </div>
+      </div>
+      
+      <!-- Nova Seção: Atrações e Atividades -->
+      <div class="atracoes-box">
+        <h4>🎁 Atrações Especiais:</h4>
+        <div class="tags-container">
+          <span class="tag-item">🛝 Brincadeiras</span>
+          <span class="tag-item">🏃 Gincanas</span>
+          <span class="tag-item">🎟️ Sorteios</span>
         </div>
       </div>
 
