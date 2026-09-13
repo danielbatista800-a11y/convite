@@ -3,541 +3,527 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VOCÊ É NOSSO CONVIDADO</title>
+  <title>Dia da Família - Encontro Kids</title>
   
-  <!-- Fontes Google e Ícones FontAwesome -->
+  <!-- Meta tags Open Graph para o WhatsApp -->
+  <meta property="og:title" content="Dia da Família - Encontro Kids 🎉">
+  <meta property="og:description" content="Venha viver esse dia especial em família com o Palestrante Convidado Tio Ari!">
+  <meta property="og:image" content="tio-ari.jpg">
+  
+  <!-- Fontes do Google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Open+Sans:wght@400;700;800&display=swap" rel="stylesheet">
   
-  <!-- Lib de Confetes -->
+  <!-- Canvas Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
-    :root {
-      --primary: #ff477e;
-      --primary-hover: #ff0055;
-      --secondary: #ff0a54;
-      --accent: #ff99c8;
-      --bg: #f8f9fa;
-      --card-bg: #ffffff;
-      --text: #2b2d42;
-    }
-
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Poppins', sans-serif;
     }
 
     body {
-      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
-      min-height: 100vh;
+      font-family: 'Open Sans', sans-serif;
+      background: #0077b6 linear-gradient(180deg, #023e8a 0%, #0077b6 50%, #00b4d8 100%);
+      color: #333;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      min-height: 100vh;
+      padding: 15px;
     }
 
-    /* Tela Inicial: Envelope Interativo */
-    #envelope-screen {
+    /* Envelope de Entrada */
+    #envelope-wrapper {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(8px);
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(2, 62, 138, 0.96);
+      z-index: 999;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      z-index: 999;
-      transition: opacity 0.6s ease, visibility 0.6s;
-    }
-
-    .envelope {
-      width: 280px;
-      height: 180px;
-      background: #ff758f;
-      border-radius: 10px;
-      position: relative;
       cursor: pointer;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: transform 0.3s ease;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
     }
 
-    .envelope:hover {
-      transform: scale(1.05);
-    }
-
-    .envelope-stamp {
-      background: white;
-      color: var(--primary);
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 24px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    }
-
-    .envelope-text {
-      color: white;
-      margin-top: 20px;
-      font-family: 'Fredoka', sans-serif;
-      font-size: 1.2rem;
-      letter-spacing: 1px;
-      text-align: center;
-      animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.8; transform: scale(0.98); }
-    }
-
-    /* Card Principal do Convite */
-    .invite-card {
-      background: var(--card-bg);
-      border-radius: 25px;
-      max-width: 480px;
-      width: 100%;
-      padding: 35px 25px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .badge-slogan {
-      background: #ffe5ec;
-      color: var(--secondary);
-      padding: 8px 16px;
+    .envelope-box {
+      background: #e9c46a;
+      border: 4px solid #f4a261;
+      padding: 30px 20px;
       border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      display: inline-block;
-      margin-bottom: 15px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      max-width: 320px;
+      animation: pulse 1.8s infinite;
     }
 
-    .title {
+    .envelope-box h2 {
       font-family: 'Fredoka', sans-serif;
-      font-size: 2.2rem;
-      color: var(--text);
-      line-height: 1.2;
-      margin-bottom: 20px;
-    }
-
-    /* Timer */
-    .countdown-box {
-      background: #f8f9fa;
-      border-radius: 15px;
-      padding: 15px;
-      margin: 20px 0;
-      border: 1px solid #e9ecef;
-    }
-
-    .countdown-title {
-      font-size: 0.8rem;
-      color: #6c757d;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      color: #d90429;
+      font-size: 1.5rem;
       margin-bottom: 10px;
     }
 
-    .timer {
-      display: flex;
-      justify-content: space-around;
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+      100% { transform: scale(1); }
     }
 
-    .timer-item {
-      display: flex;
-      flex-direction: column;
+    /* Cartão Principal */
+    .card {
+      background: #fdf6e3 linear-gradient(180deg, #fff9eb 0%, #f7e8c8 100%);
+      border-radius: 24px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+      overflow: hidden;
+      position: relative;
+      border: 4px solid #d4a373;
     }
 
-    .timer-number {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--primary);
+    /* Placa de Madeira Superior com Logo */
+    .header-wood {
+      background: #8b5a2b linear-gradient(180deg, #a06535 0%, #6e421f 100%);
+      padding: 20px 15px 15px;
+      text-align: center;
+      border-bottom: 5px solid #4a2c11;
+      position: relative;
     }
 
-    .timer-label {
-      font-size: 0.75rem;
-      color: #6c757d;
+    .header-logo {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      max-width: 75px;
+      height: auto;
+      filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.4));
     }
 
-    /* Seções de Informações */
-    .info-group {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin: 25px 0;
-      text-align: left;
-    }
-
-    .info-card {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      background: #f8f9fa;
-      padding: 15px;
-      border-radius: 15px;
-    }
-
-    .info-icon {
-      background: var(--primary);
-      color: white;
-      width: 45px;
-      height: 45px;
-      border-radius: 12px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 1.2rem;
-      flex-shrink: 0;
-    }
-
-    .info-text h4 {
-      font-size: 0.95rem;
-      color: var(--text);
-    }
-
-    .info-text p {
-      font-size: 0.85rem;
-      color: #6c757d;
-    }
-
-    /* Atrações (Destaques) */
-    .attractions-section {
-      margin: 25px 0;
-    }
-
-    .section-title {
+    .header-wood h1 {
       font-family: 'Fredoka', sans-serif;
-      font-size: 1.3rem;
-      color: var(--text);
-      margin-bottom: 15px;
+      color: #ffffff;
+      font-size: 1.6rem;
+      text-shadow: 2px 2px 0px #000;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding-right: 40px; /* espaço para o logo */
+    }
+
+    .header-wood h2 {
+      font-family: 'Fredoka', sans-serif;
+      color: #00b4d8;
+      font-size: 2.1rem;
+      text-shadow: 2px 2px 0px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+      letter-spacing: 1.5px;
+      margin-top: -5px;
+      text-transform: uppercase;
+    }
+
+    .content {
+      padding: 20px 20px 30px;
       text-align: center;
     }
 
-    .attractions-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
-    .attraction-item {
-      background: #fff0f3;
-      padding: 12px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--secondary);
-    }
-
-    .attraction-item i {
-      font-size: 1.1rem;
-    }
-
-    /* Formulário RSVP */
-    .rsvp-box {
-      background: #f8f9fa;
-      padding: 20px;
+    /* Seção Palestrante com Foto */
+    .palestrante-wrapper {
+      background: #0077b6;
       border-radius: 18px;
-      margin-top: 25px;
-      border: 2px dashed var(--accent);
+      padding: 15px;
+      margin: 15px 0;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      color: white;
     }
 
-    .form-group {
-      margin-bottom: 12px;
+    .palestrante-tag {
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #ffb703;
+      margin-bottom: 8px;
+    }
+
+    .palestrante-img-container {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 10px;
+      border-radius: 50%;
+      border: 4px solid #ffb703;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      background: #000;
+    }
+
+    .palestrante-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .palestrante-wrapper h3 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2.2rem;
+      color: #ffffff;
+      text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+      line-height: 1.1;
+    }
+
+    /* Slogan Amarelo */
+    .slogan-box {
+      background: #ffb703;
+      color: #023e8a;
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 10px 15px;
+      border-radius: 25px;
+      display: inline-block;
+      margin: 5px 0 15px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    /* Info Grid */
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 15px;
       text-align: left;
     }
 
-    .form-group label {
+    .info-item {
+      background: #ffffff;
+      padding: 12px 16px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border: 2px solid #e7c6ff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    .info-icon {
+      font-size: 1.8rem;
+      background: #f8edeb;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .info-text label {
       font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text);
+      color: #6c757d;
+      font-weight: 700;
       display: block;
-      margin-bottom: 5px;
+      text-transform: uppercase;
     }
 
-    .form-control {
-      width: 100%;
+    .info-text p {
+      font-weight: 800;
+      color: #1d3557;
+      font-size: 1.05rem;
+    }
+
+    /* Placa Data */
+    .date-wood {
+      background: #6e421f;
+      color: #fff;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 3px solid #8b5a2b;
+      margin: 15px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.4);
+    }
+
+    .date-wood span {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.2rem;
+      color: #f4a261;
+    }
+
+    .date-wood strong {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2rem;
+      color: #ffb703;
+      background: #4a2c11;
+      padding: 2px 15px;
+      border-radius: 8px;
+      border: 1px dashed #ffb703;
+    }
+
+    /* Timer */
+    .timer-container {
+      background: #023e8a;
+      color: white;
       padding: 12px;
-      border: 1px solid #ced4da;
-      border-radius: 10px;
-      font-size: 0.9rem;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+    .timer-container p {
+      font-size: 0.85rem;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+    .timer-box {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.4rem;
+      color: #ffb703;
+      font-weight: bold;
+    }
+
+    /* Crianças 3D Banner */
+    .criancas-container {
+      margin: 15px 0;
+      max-height: 180px;
+      overflow: hidden;
+      border-radius: 15px;
+    }
+
+    .criancas-container img {
+      width: 100%;
+      height: auto;
+      margin-top: -30px; /* ajusta enquadramento */
+      display: block;
+    }
+
+    /* Formulário RSVP */
+    .rsvp-section {
+      background: #ffffff;
+      padding: 15px;
+      border-radius: 15px;
+      border: 2px dashed #0077b6;
+    }
+
+    .rsvp-section h4 {
+      font-family: 'Fredoka', sans-serif;
+      color: #023e8a;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 10px 12px;
+      border: 2px solid #ced4da;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      font-size: 0.95rem;
       outline: none;
-      transition: border 0.3s;
     }
 
-    .form-control:focus {
-      border-color: var(--primary);
+    .input-field:focus {
+      border-color: #0077b6;
     }
 
-    /* Botões */
     .btn {
       width: 100%;
       padding: 14px;
       border: none;
-      border-radius: 25px;
-      font-weight: 600;
-      font-size: 1rem;
+      border-radius: 30px;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.1rem;
+      font-weight: bold;
       cursor: pointer;
       display: flex;
-      justify-content: center;
       align-items: center;
-      gap: 10px;
-      transition: all 0.3s ease;
+      justify-content: center;
+      gap: 8px;
       text-decoration: none;
     }
 
-    .btn-primary {
-      background: var(--primary);
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-whatsapp {
+      background: #25d366;
       color: white;
-      box-shadow: 0 4px 15px rgba(255, 71, 126, 0.4);
+      box-shadow: 0 4px 10px rgba(37, 211, 102, 0.4);
+      margin-top: 5px;
     }
 
-    .btn-primary:hover {
-      background: var(--primary-hover);
-      transform: translateY(-2px);
+    .btn-maps {
+      background: #e63946;
+      color: white;
+      box-shadow: 0 4px 10px rgba(230, 57, 70, 0.3);
+      margin-bottom: 15px;
     }
 
-    .btn-outline {
-      background: transparent;
-      color: var(--primary);
-      border: 2px solid var(--primary);
-      margin-top: 10px;
-    }
-
-    .btn-outline:hover {
-      background: #fff0f3;
+    /* Footer Endereço Completo */
+    .footer-address {
+      background: #1d3557;
+      color: #ffffff;
+      padding: 12px 15px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      border-top: 3px solid #ffb703;
+      margin-top: 20px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
 
-  <!-- TELA INTERATIVA INICIAL: ENVELOPE -->
-  <div id="envelope-screen" onclick="abrirConvite()">
-    <div class="envelope">
-      <div class="envelope-stamp">
-        <i class="fa-solid fa-envelope-open-text"></i>
-      </div>
+  <!-- ENVELOPE / TELA DE BOAS-VINDAS -->
+  <div id="envelope-wrapper" onclick="abrirConvite()">
+    <div class="envelope-box">
+      <h2>✉️ Você recebeu um Convite Especial!</h2>
+      <p style="color: #4a2c11; font-weight: bold; margin-top: 8px;">Clique aqui para abrir</p>
     </div>
-    <div class="envelope-text">Clique para abrir seu convite! ✨</div>
   </div>
 
-  <!-- CONVITE PRINCIPAL -->
-  <div class="invite-card">
+  <!-- CARTÃO DO CONVITE -->
+  <div class="card">
     
-    <!-- Slogan / Destaque Topo -->
-    <span class="badge-slogan" id="display-slogan">Sorteios & Brincadeiras</span>
-
-    <!-- Título do Evento -->
-    <h1 class="title" id="display-titulo">Aniversário do Daniel</h1>
-
-    <!-- Contagem Regressiva -->
-    <div class="countdown-box">
-      <div class="countdown-title">Falta pouco para a festa!</div>
-      <div class="timer">
-        <div class="timer-item"><span class="timer-number" id="dias">00</span><span class="timer-label">Dias</span></div>
-        <div class="timer-item"><span class="timer-number" id="horas">00</span><span class="timer-label">Horas</span></div>
-        <div class="timer-item"><span class="timer-number" id="minutos">00</span><span class="timer-label">Min</span></div>
-        <div class="timer-item"><span class="timer-number" id="segundos">00</span><span class="timer-label">Seg</span></div>
-      </div>
+    <!-- Topo Madeira com Logo -->
+    <div class="header-wood">
+      <img src="logo.png" alt="ACPADESB Logo" class="header-logo">
+      <h1>Dia da Família</h1>
+      <h2>Encontro Kids</h2>
     </div>
 
-    <!-- Informações do Evento -->
-    <div class="info-group">
-      <!-- Data e Horário -->
-      <div class="info-card">
-        <div class="info-icon"><i class="fa-solid fa-calendar-day"></i></div>
-        <div class="info-text">
-          <h4 id="display-data">Sábado, 15 de Outubro</h4>
-          <p id="display-horario">Horário: A partir das 19:00h</p>
-        </div>
-      </div>
-
-      <!-- Localização -->
-      <div class="info-card">
-        <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
-        <div class="info-text">
-          <h4 id="display-local-nome">Espaço de Festas Celebração</h4>
-          <p id="display-local-endereco">Rua das Flores, 123 - Centro</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Botão do Mapa -->
-    <a href="#" id="link-mapa" target="_blank" class="btn btn-outline">
-      <i class="fa-solid fa-map-location-dot"></i> Ver Local no Google Maps
-    </a>
-
-    <!-- Atrações & Destaques -->
-    <div class="attractions-section">
-      <h3 class="section-title">O que vai ter na festa? 🎈</h3>
-      <div class="attractions-grid" id="container-atracoes">
-        <!-- Renderizado dinamicamente pelo JS -->
-      </div>
-    </div>
-
-    <!-- Formulário RSVP (Confirmação) -->
-    <div class="rsvp-box">
-      <h3 class="section-title" style="margin-bottom: 10px;">Confirmar Presença</h3>
+    <div class="content">
       
-      <div class="form-group">
-        <label for="nome">Seu Nome Completo:</label>
-        <input type="text" id="nome" class="form-control" placeholder="Digite seu nome">
+      <!-- Palestrante com Foto -->
+      <div class="palestrante-wrapper">
+        <div class="palestrante-tag">Palestrante Convidado</div>
+        <div class="palestrante-img-container">
+          <img src="tio-ari.jpg" alt="Palestrante Tio Ari">
+        </div>
+        <h3>Tio Ari</h3>
       </div>
 
-      <div class="form-group">
-        <label for="acompanhantes">Quantidade de Acompanhantes:</label>
-        <select id="acompanhantes" class="form-control">
-          <option value="Vou sozinho(a)">Vou sozinho(a)</option>
-          <option value="+1 acompanhante">+1 acompanhante</option>
-          <option value="+2 acompanhantes">+2 acompanhantes</option>
-          <option value="+3 ou mais acompanhantes">+3 ou mais acompanhantes</option>
-        </select>
+      <!-- Slogan -->
+      <div class="slogan-box">
+        🎈 Venha viver esse dia especial em família!
       </div>
 
-      <button class="btn btn-primary" onclick="confirmarWhatsApp()">
-        <i class="fa-brands fa-whatsapp"></i> Confirmar no WhatsApp
-      </button>
+      <!-- Placa de Data -->
+      <div class="date-wood">
+        <span>Data do Evento:</span>
+        <strong>03/10</strong>
+      </div>
+
+      <!-- Informações Principais -->
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-icon">⏰</div>
+          <div class="info-text">
+            <label>Horário do Evento</label>
+            <p>10:00 às 16:00</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <div class="info-icon">📍</div>
+          <div class="info-text">
+            <label>Local</label>
+            <p>Fundação Criança</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Timer Regressivo -->
+      <div class="timer-container">
+        <p>Tempo restante para o evento:</p>
+        <div id="timer" class="timer-box">Carregando...</div>
+      </div>
+
+      <!-- Botão Mapa -->
+      <a href="https://maps.google.com/?q=Av.+Francisco+Visentainer,+804+-+Assunção,+São+Bernardo+do+Campo+-+SP,+09861-630" target="_blank" class="btn btn-maps">
+        🗺️ Abrir Endereço no Google Maps
+      </a>
+
+      <!-- Personagens 3D -->
+      <div class="criancas-container">
+        <img src="criancas.png" alt="Pequenos Pescadores">
+      </div>
+
+      <!-- Formulário RSVP -->
+      <div class="rsvp-section">
+        <h4>Confirmar Presença</h4>
+        <input type="text" id="nome" class="input-field" placeholder="Seu Nome Completo">
+        <input type="number" id="qtd" class="input-field" placeholder="Qtd. de Acompanhantes" min="0">
+        <button onclick="confirmarWhatsApp()" class="btn btn-whatsapp">
+          ✅ Confirmar pelo WhatsApp
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Rodapé com Endereço Completo -->
+    <div class="footer-address">
+      📍 <strong>Av. Francisco Visentainer, 804</strong><br>
+      Bairro Assunção, SBC - SP | CEP: 09861-630
     </div>
 
   </div>
 
   <script>
-    /* ===============================================================
-       CONFIGURAÇÕES DO CONVITE (ALTERE SEUS DADOS AQUI)
-    =============================================================== */
-    const CONFIG = {
-      titulo: "Aniversário do Daniel 3.0",
-      slogan: "🎉 Sorteios, Brincadeiras & Diversão!",
-      
-      // Data no formato AAAA-MM-DDTHH:mm:ss
-      dataISO: "2026-10-15T19:00:00", 
-      
-      // Textos exibidos no cartão
-      dataTexto: "Sábado, 15 de Outubro de 2026",
-      horarioTexto: "Horário: A partir das 19:00h",
-      localNome: "Espaço de Festas Celebração",
-      localEndereco: "Rua das Flores, nº 123 - São Paulo/SP",
-      
-      // Link do Google Maps do local
-      linkGoogleMaps: "https://maps.google.com/?q=Rua+das+Flores+123+Sao+Paulo",
-      
-      // Seu número do WhatsApp com DDD (somente números)
-      telefoneWhatsApp: "5511999999999",
+    // Substitua pelo seu WhatsApp com DDD (ex: 5511999999999)
+    const SEU_NUMERO_WHATSAPP = "5511999999999"; 
 
-      // Lista de Atrações/Slogans
-      atracoes: [
-        { icone: "fa-gift", texto: "Sorteios Especiais" },
-        { icone: "fa-gamepad", texto: "Brincadeiras" },
-        { icone: "fa-music", texto: "DJ & Música Ao Vivo" },
-        { icone: "fa-utensils", texto: "Comida & Drinks" }
-      ]
-    };
+    // Data do Evento: 03/10/2026 às 10:00 (mês 9 no JS = Outubro)
+    const dataEvento = new Date(2026, 9, 3, 10, 0, 0).getTime();
 
-    /* ===============================================================
-       LÓGICA E INTERATIVIDADE DO CONVITE
-    =============================================================== */
-
-    // 1. Preencher Informações na Tela
-    document.getElementById("display-titulo").innerText = CONFIG.titulo;
-    document.getElementById("display-slogan").innerText = CONFIG.slogan;
-    document.getElementById("display-data").innerText = CONFIG.dataTexto;
-    document.getElementById("display-horario").innerText = CONFIG.horarioTexto;
-    document.getElementById("display-local-nome").innerText = CONFIG.localNome;
-    document.getElementById("display-local-endereco").innerText = CONFIG.localEndereco;
-    document.getElementById("link-mapa").href = CONFIG.linkGoogleMaps;
-
-    // Renderizar Atrações
-    const atracoesContainer = document.getElementById("container-atracoes");
-    CONFIG.atracoes.forEach(item => {
-      atracoesContainer.innerHTML += `
-        <div class="attraction-item">
-          <i class="fa-solid ${item.icone}"></i>
-          <span>${item.texto}</span>
-        </div>
-      `;
-    });
-
-    // 2. Animação de Abertura do Envelope
     function abrirConvite() {
-      const envelopeScreen = document.getElementById("envelope-screen");
-      envelopeScreen.style.opacity = "0";
-      envelopeScreen.style.visibility = "hidden";
-      
-      // Efeito de confete ao abrir
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6 }
-      });
+      const envelope = document.getElementById('envelope-wrapper');
+      envelope.style.opacity = '0';
+      setTimeout(() => {
+        envelope.style.visibility = 'hidden';
+      }, 600);
     }
 
-    // 3. Contagem Regressiva
-    const dataAlvo = new Date(CONFIG.dataISO).getTime();
-
-    const timerInterval = setInterval(() => {
+    const timerInterval = setInterval(function() {
       const agora = new Date().getTime();
-      const diferenca = dataAlvo - agora;
+      const distancia = dataEvento - agora;
 
-      if (diferenca > 0) {
-        const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
-        const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
-        const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
+      const dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+      const segundos = Math.floor((distancia % (1000 * 60)) / 1000);
 
-        document.getElementById("dias").innerText = dias < 10 ? '0' + dias : dias;
-        document.getElementById("horas").innerText = horas < 10 ? '0' + horas : horas;
-        document.getElementById("minutos").innerText = minutos < 10 ? '0' + minutos : minutos;
-        document.getElementById("segundos").innerText = segundos < 10 ? '0' + segundos : segundos;
+      if (distancia > 0) {
+        document.getElementById("timer").innerHTML = `${dias}d ${horas}h ${minutos}m ${segundos}s`;
       } else {
         clearInterval(timerInterval);
-        document.querySelector(".countdown-box").innerHTML = "<h3 style='color:var(--primary); padding:10px;'>É HOJE! O evento começou! 🎉</h3>";
+        document.getElementById("timer").innerHTML = "É HOJE! 🎉";
       }
     }, 1000);
 
-    // 4. Confirmação de Presença via WhatsApp + Confetes
     function confirmarWhatsApp() {
-      const nome = document.getElementById("nome").value.trim();
-      const acompanhantes = document.getElementById("acompanhantes").value;
+      const nome = document.getElementById('nome').value.trim();
+      const qtd = document.getElementById('qtd').value.trim() || "0";
 
       if (!nome) {
-        alert("Por favor, preencha o seu nome antes de confirmar!");
+        alert("Por favor, preencha o seu nome antes de confirmar.");
         return;
       }
 
-      // Solta chuva de confetes festivos
       confetti({
-        particleCount: 150,
-        spread: 100,
-        origin: { y: 0.5 }
+        particleCount: 120,
+        spread: 70,
+        origin: { y: 0.6 }
       });
 
-      // Monta a mensagem formatada para o WhatsApp
-      const textoMensagem = `Olá! Confirmo minha presença no *${CONFIG.titulo}*!\n\n👤 *Nome:* ${nome}\n👥 *Acompanhantes:* ${acompanhantes}`;
-      const urlWhatsApp = `https://wa.me/${CONFIG.telefoneWhatsApp}?text=${encodeURIComponent(textoMensagem)}`;
+      const texto = `Olá! Confirmo minha presença no *Dia da Família - Encontro Kids*! 🎉\n\n👤 *Nome:* ${nome}\n👥 *Acompanhantes:* ${qtd}`;
+      const url = `https://wa.me/${SEU_NUMERO_WHATSAPP}?text=${encodeURIComponent(texto)}`;
 
-      // Redireciona para o WhatsApp após um breve delay
       setTimeout(() => {
-        window.open(urlWhatsApp, "_blank");
-      }, 1200);
+        window.open(url, '_blank');
+      }, 1000);
     }
   </script>
 </body>
