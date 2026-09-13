@@ -86,6 +86,20 @@
       border: 4px solid #d4a373;
     }
 
+    /* Efeito de flutuação infinita */
+.palestrante-img-container, .criancas-container img {
+  animation: flutuarLooping 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes flutuarLooping {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-8px) rotate(1.5deg);
+  }
+}
+
     /* Placa de Madeira Superior com Logo */
     .header-wood {
       background: #8b5a2b linear-gradient(180deg, #a06535 0%, #6e421f 100%);
